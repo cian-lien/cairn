@@ -1,0 +1,15 @@
+{
+  "title": "决策与复盘",
+  "description": "技术决策记录与事故复盘",
+  "icon": "Signpost",
+  "root": true,
+  "pages": [
+    "index",
+    "---决策记录---",
+    "adr-template",
+    "adr-012-fumadocs",
+    "adr-011-pnpm",
+    "---事故复盘---",
+    "postmortems"
+  ]
+}

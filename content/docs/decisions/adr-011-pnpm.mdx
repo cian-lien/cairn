@@ -1,0 +1,19 @@
+---
+title: ADR-011 统一使用 pnpm
+description: 所有前端项目统一使用 pnpm 管理依赖。
+---
+
+**状态**：已采纳
+
+## 背景
+
+不同项目混用 npm、yarn、pnpm，锁文件冲突，CI 配置不一致。
+
+## 决定
+
+统一使用 pnpm，并在 `package.json` 里用 `packageManager` 字段锁定版本。
+
+## 后果
+
+- 安装更快、磁盘占用更少
+- 新成员需要先安装 pnpm：`corepack enable`

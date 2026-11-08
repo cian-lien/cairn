@@ -1,0 +1,7 @@
+{
+  "title": "产品空间",
+  "description": "需求、术语与用户反馈",
+  "icon": "Layers",
+  "root": true,
+  "pages": ["---产品---", "index", "glossary", "roadmap", "---需求---", "requirement-template", "feedback"]
+}

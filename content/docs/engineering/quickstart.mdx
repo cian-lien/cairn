@@ -1,0 +1,69 @@
+---
+title: 快速开始
+description: 十分钟内在本地跑起知识库，并提交你的第一篇文档。
+---
+
+## 准备环境
+
+开始之前，确认本地已安装 Node.js 22 以上版本和 pnpm。知识库的全部内容都放在仓库的 `content/docs` 目录下。
+
+<Callout title="只想改个错别字？">
+  每篇文档底部都有「在 GitHub 上编辑」，不用在本地跑项目。
+</Callout>
+
+## 四步跑起来
+
+<Steps>
+<Step>
+
+### 克隆仓库
+
+```bash
+git clone https://github.com/cian-lien/cairn.git
+cd cairn
+```
+
+</Step>
+<Step>
+
+### 安装依赖并启动
+
+```bash
+pnpm install
+pnpm dev
+# 打开 http://localhost:3000
+```
+
+</Step>
+<Step>
+
+### 新建一篇文档
+
+文件路径就是网址，保存后浏览器自动刷新。
+
+```mdx title="content/docs/team/onboarding.mdx"
+---
+title: 新人上手清单
+description: 入职第一周要做的事
+---
+
+## 第一天
+```
+
+</Step>
+<Step>
+
+### 提交 PR
+
+推送分支并发起 PR，CI 会生成预览链接，合并后自动上线。
+
+</Step>
+</Steps>
+
+## Frontmatter 字段
+
+| 字段          | 类型     | 说明                     |
+| ------------- | -------- | ------------------------ |
+| `title`       | `string` | 页面标题，必填           |
+| `description` | `string` | 一句话摘要，用于搜索结果 |
+| `icon`        | `string` | 可选，Lucide 图标名      |

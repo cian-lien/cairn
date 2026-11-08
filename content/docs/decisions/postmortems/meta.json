@@ -1,0 +1,6 @@
+{
+  "title": "事故复盘",
+  "icon": "Flame",
+  "defaultOpen": true,
+  "pages": ["index", "template"]
+}

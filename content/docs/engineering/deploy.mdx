@@ -1,0 +1,36 @@
+---
+title: 部署流程
+description: 从合并代码到线上可用的完整步骤。
+---
+
+<Callout>
+  上线前请确认 main 分支 CI 全部通过，并在群里同步一次变更内容。
+</Callout>
+
+## 准备工作
+
+- 已有仓库的推送权限
+- 本地能正常运行 `pnpm build`
+
+## 构建与推送
+
+```bash
+pnpm build
+git push origin main
+# 推送后由 Vercel 自动构建并发布
+```
+
+知识库是一个标准的 Next.js 项目，推荐部署在 Vercel：导入 GitHub 仓库，框架选 Next.js，其他保持默认即可。
+
+## 回滚
+
+在 Vercel 面板的 **Deployments** 里找到上一次正常的部署，点 **Promote to Production**。
+
+<Callout type="warn" title="回滚之后">
+  记得在 [事故复盘](/docs/decisions/postmortems) 里补一篇记录，写清楚原因和后续措施。
+</Callout>
+
+## 常见问题
+
+**构建时报找不到 `.source`？**
+`.source` 目录在 `next dev` / `next build` 时自动生成，不需要提交到仓库。

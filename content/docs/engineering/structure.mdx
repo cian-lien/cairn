@@ -1,0 +1,41 @@
+---
+title: 目录结构
+description: 文件夹就是导航，弄清楚每个目录放什么。
+---
+
+<Files>
+  <Folder name="content/docs" defaultOpen>
+    <Folder name="engineering（工程手册）" defaultOpen>
+      <File name="meta.json" />
+      <File name="index.mdx" />
+      <File name="deploy.mdx" />
+    </Folder>
+    <Folder name="product（产品空间）" />
+    <Folder name="team（团队约定）" />
+    <Folder name="decisions（决策与复盘）" />
+  </Folder>
+  <Folder name="app">
+    <Folder name="(home)" />
+    <Folder name="docs" />
+  </Folder>
+  <Folder name="components" />
+</Files>
+
+## 工作区
+
+`content/docs` 下的每个一级文件夹都是一个**工作区**，在侧边栏顶部切换。工作区由文件夹里的 `meta.json` 声明：
+
+```json title="content/docs/engineering/meta.json"
+{
+  "title": "工程手册",
+  "description": "代码、部署与排障",
+  "icon": "Code",
+  "root": true
+}
+```
+
+想新增一个工作区：建文件夹、写 `meta.json`（`root: true`），再把文件夹名加到 `content/docs/meta.json` 的 `pages` 里。图标颜色在 `lib/shared.ts` 的 `workspaces` 里配置。
+
+## 侧边栏顺序
+
+文件夹里 `meta.json` 的 `pages` 决定顺序，`---标题---` 是分组标题，`...` 表示其余页面按字母排序。

@@ -1,0 +1,18 @@
+{
+  "title": "团队约定",
+  "description": "协作、值班与新人上手",
+  "icon": "Users",
+  "root": true,
+  "pages": [
+    "---协作---",
+    "index",
+    "code-review",
+    "on-call",
+    "contributing",
+    "---新人---",
+    "onboarding",
+    "accounts",
+    "---日常---",
+    "meetings"
+  ]
+}

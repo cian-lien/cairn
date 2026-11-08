@@ -1,0 +1,49 @@
+---
+title: 如何贡献一篇文档
+description: 放下你的第一块石头：写、提交、上线。
+---
+
+<Steps>
+<Step>
+
+### 写
+
+在对应工作区的文件夹里新建 `.mdx` 文件：
+
+- 技术相关 → `content/docs/engineering/`
+- 产品与需求 → `content/docs/product/`
+- 协作约定 → `content/docs/team/`
+- 技术决策、事故复盘 → `content/docs/decisions/`
+
+</Step>
+<Step>
+
+### 提交
+
+```bash
+git checkout -b docs/简短描述
+git add .
+git commit -m "docs: 新增 xxx"
+git push
+```
+
+然后在 GitHub 上发起 PR，队友可以在预览链接里看效果。
+
+</Step>
+<Step>
+
+### 上线
+
+合并到 `main` 后自动构建，几分钟内全员可见。
+
+</Step>
+</Steps>
+
+## 写好一篇文档
+
+- **一篇只回答一个问题**，标题就是这个问题的答案
+- `description` 写一句话摘要，它会出现在搜索结果里
+- 多用步骤、表格和代码块，少用大段文字
+- 有时效性的内容，写明「截至什么时候」
+
+<Callout title="不确定放哪？">先写下来，放错了 Review 时会有人提醒你挪位置。写下来比放对地方重要。</Callout>

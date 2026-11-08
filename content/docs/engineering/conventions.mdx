@@ -1,0 +1,35 @@
+---
+title: 代码规范
+description: 命名、提交信息与 Code Review 的约定。
+---
+
+## 提交信息
+
+使用 [Conventional Commits](https://www.conventionalcommits.org/zh-hans/)：
+
+```text
+feat(docs): 新增环境变量说明
+fix(search): 修复中文关键词高亮
+chore: 升级依赖
+```
+
+| 类型       | 用途             |
+| ---------- | ---------------- |
+| `feat`     | 新功能、新文档   |
+| `fix`      | 修复问题         |
+| `docs`     | 只改文档         |
+| `refactor` | 重构，不改行为   |
+| `chore`    | 构建、依赖、配置 |
+
+## 分支
+
+- `main`：始终可部署
+- 功能分支：`feat/简短描述`，合并后删除
+
+## 命名
+
+<Tabs items={['TypeScript', 'CSS', '文件']}>
+  <Tab value="TypeScript">变量和函数用 `camelCase`，组件和类型用 `PascalCase`。</Tab>
+  <Tab value="CSS">优先使用 Tailwind 工具类，自定义类名用 `kebab-case`。</Tab>
+  <Tab value="文件">文件名用 `kebab-case`，例如 `knowledge-map.tsx`。</Tab>
+</Tabs>

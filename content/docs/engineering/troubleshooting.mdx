@@ -1,0 +1,41 @@
+---
+title: 故障排查
+description: 部署失败、构建超时等常见报错的排查思路。
+---
+
+## 排查顺序
+
+<Steps>
+<Step>
+
+### 看现象
+
+是全部用户还是部分用户？从什么时候开始？最近有没有上线？
+
+</Step>
+<Step>
+
+### 看日志
+
+Vercel 面板 → 对应部署 → **Logs**，先找第一条报错。
+
+</Step>
+<Step>
+
+### 止损
+
+影响线上时先 [回滚](/docs/engineering/deploy#回滚)，再慢慢查原因。
+
+</Step>
+</Steps>
+
+## 常见报错
+
+<Accordions>
+  <Accordion title="Module not found: Can't resolve 'collections/server'">
+    `.source` 目录还没生成。先运行一次 `pnpm dev` 或 `pnpm build`。
+  </Accordion>
+  <Accordion title="中文搜索不到结果">
+    确认文档的 `title` 和正文里确实有这个词；搜索索引在构建时生成，新文档需要重新部署。
+  </Accordion>
+</Accordions>

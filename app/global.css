@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* 积石 Cairn 设计 token（Linear 风格暗色） */
+@theme {
+  --color-cairn-bg: #08090a;
+  --color-cairn-card: #0d0e10;
+  --color-cairn-raised: #111214;
+  --color-cairn-code: #0a0b0c;
+  --color-cairn-text: #f7f8f8;
+  --color-cairn-soft: #b4bcd0;
+  --color-cairn-muted: #8a8f98;
+  --color-cairn-accent: #828fff;
+  --color-cairn-mint: #9ae6b4;
+  --color-cairn-amber: #f6c177;
+
+  --font-sans: var(--font-inter), var(--font-noto-sc), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --animate-caret: caret 1s steps(1) infinite;
+  --animate-pulse-soft: pulse-soft 2.2s ease-in-out infinite;
+  --animate-ping-soft: ping-soft 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes caret {
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  @keyframes ping-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    80%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+}
+
+/* Fumadocs UI 暗色主题变量，对齐首页设计 */
+.dark {
+  --color-fd-background: #08090a;
+  --color-fd-foreground: #f7f8f8;
+  --color-fd-muted: #111214;
+  --color-fd-muted-foreground: #8a8f98;
+  --color-fd-popover: #141518;
+  --color-fd-popover-foreground: #f7f8f8;
+  --color-fd-card: #0d0e10;
+  --color-fd-card-foreground: #f7f8f8;
+  --color-fd-border: rgb(255 255 255 / 0.08);
+  --color-fd-primary: #828fff;
+  --color-fd-primary-foreground: #08090a;
+  --color-fd-secondary: #111214;
+  --color-fd-secondary-foreground: #f7f8f8;
+  --color-fd-accent: rgb(255 255 255 / 0.06);
+  --color-fd-accent-foreground: #f7f8f8;
+  --color-fd-ring: #828fff;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 首页素材 */
+.cairn-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 70% 70% at 30% 0%, #000 20%, transparent 75%);
+}
+
+.cairn-topo {
+  background-image: url('/topo.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cairn-ridge {
+  background-image: url('/ridge.svg');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+.cairn-fade-edge {
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 40%, transparent 80%);
+}
+
+.cairn-fade-bottom {
+  mask-image: linear-gradient(#000 60%, transparent);
+}
+
+/* GSAP 接管前先隐藏需要入场动画的元素，避免闪烁；减少动态效果时不隐藏 */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-intro] {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-caret,
+  .animate-pulse-soft,
+  .animate-ping-soft,
+  .animate-float {
+    animation: none;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "title": "工程手册",
+  "description": "代码、部署与排障",
+  "icon": "Code",
+  "root": true,
+  "pages": [
+    "---入门---",
+    "index",
+    "quickstart",
+    "structure",
+    "---工程指南---",
+    "conventions",
+    "deploy",
+    "env",
+    "troubleshooting"
+  ]
+}
