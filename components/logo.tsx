@@ -27,7 +27,6 @@ export function CairnLogo() {
     <span className="inline-flex items-center gap-2.5 font-semibold tracking-tight">
       <CairnMark className="size-5.5" />
       积石
-      <span className="font-normal text-fd-muted-foreground">Cairn</span>
     </span>
   );
 }
