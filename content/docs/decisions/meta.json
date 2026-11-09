@@ -7,6 +7,7 @@
     "index",
     "---决策记录---",
     "adr-template",
+    "adr-013-cloudflare-pages",
     "adr-012-fumadocs",
     "adr-011-pnpm",
     "---事故复盘---",

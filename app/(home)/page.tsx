@@ -289,14 +289,14 @@ export default function HomePage() {
                   线上出问题了，怎么回滚？
                 </div>
                 <div className="max-w-[85%] animate-float rounded-[12px_12px_12px_3px] border border-white/10 px-3.5 py-2.5 text-cairn-soft">
-                  在 Vercel 面板选择上一次部署并 Promote 即可。
+                  在 Cloudflare Pages 的部署列表里，对上一次正常的部署选择「回滚到此部署」。
                   <span className="mt-1.5 block text-xs text-cairn-accent">出处：部署流程 › 回滚</span>
                 </div>
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold">问知识库</h3>
-                  <span className="rounded-full border border-white/12 px-2 py-0.5 text-[11px] text-cairn-muted">规划中</span>
+                  <span className="rounded-full border border-white/12 px-2 py-0.5 font-mono text-[11px] text-cairn-muted">Ctrl /</span>
                 </div>
                 <p className="mt-2 text-sm leading-[1.7] text-cairn-muted">接入大模型，只根据团队文档回答，并附上出处。</p>
               </div>

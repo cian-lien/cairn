@@ -1,0 +1,4 @@
+# Cloudflare Pages 跳转规则
+# 文档首页直接进入第一个工作区，侧边栏的工作区切换器始终可见
+/docs   /docs/engineering   302
+/docs/  /docs/engineering   302

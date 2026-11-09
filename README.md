@@ -21,7 +21,10 @@ pnpm dev
 | `content/docs/`               | 全部文档，每个一级文件夹是一个工作区               |
 | `app/(home)/`                 | 首页                                               |
 | `app/docs/`                   | 文档布局与页面                                     |
-| `app/api/search/route.ts`     | 全文搜索（Orama，中文开箱即用）                    |
+| `app/api/search/route.ts`     | 静态搜索索引（构建时生成，浏览器端搜索）           |
+| `functions/api/chat.ts`       | AI 问答接口（Cloudflare Pages Function）           |
+| `components/ai/`              | Ask AI 聊天面板（`@fumadocs/ai-chat`）             |
+| `public/_redirects`           | Cloudflare Pages 跳转规则                          |
 | `components/home/`            | 首页区块与动效（GSAP、Motion）                     |
 | `components/logo.tsx`         | 积石标志                                           |
 | `lib/source.ts`               | Fumadocs 内容源                                    |
@@ -50,9 +53,28 @@ pnpm dev
 - 特性卡片：ScrollTrigger.batch 依次淡入，Motion 弹簧跟随鼠标光斑
 - 系统开启「减少动态效果」时，所有位移动画自动关闭
 
-## 部署
+## 部署：Cloudflare Pages + Access
 
-推荐 Vercel：导入仓库，框架选 Next.js，其余默认。合并到 `main` 自动上线。
+- 页面静态导出到 `out/`，部署在 Cloudflare Pages（构建命令 `pnpm build`，输出目录 `out`，`NODE_VERSION=22`）
+- AI 问答：`functions/api/chat.ts` 是 Pages Function，模型通过环境变量配置：
+
+  | 变量           | 示例                          |
+  | -------------- | ----------------------------- |
+  | `LLM_BASE_URL` | `https://api.deepseek.com/v1` |
+  | `LLM_API_KEY`  | `sk-...`（设为 Secret）       |
+  | `LLM_MODEL`    | `deepseek-chat`               |
+
+- 访问控制：Cloudflare Access + 邮箱验证码，只放行白名单邮箱
+
+完整步骤见站内「工程手册 › 部署流程」（`content/docs/engineering/deploy.mdx`）。
+
+## 本地调试
+
+```bash
+pnpm dev                          # 只跑页面
+cp .dev.vars.example .dev.vars    # 填入 LLM 配置
+pnpm preview                      # 构建 + wrangler pages dev，连同 AI 问答一起跑
+```
 
 ## 贡献文档
 

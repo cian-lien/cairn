@@ -105,7 +105,7 @@ export function ProductShot() {
                     <span className="text-cairn-muted">$</span> git <span className="text-cairn-mint">push</span>{' '}
                     <span className="text-cairn-amber">origin main</span>
                   </div>
-                  <div className="text-cairn-muted"># 推送后由 Vercel 自动构建并发布</div>
+                  <div className="text-cairn-muted"># 推送后由 Cloudflare Pages 自动构建并发布</div>
                 </div>
               </div>
               <aside className="hidden flex-col gap-2.5 border-l border-white/6 px-5 py-9 text-xs md:flex">

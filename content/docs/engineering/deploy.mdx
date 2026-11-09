@@ -1,30 +1,102 @@
 ---
 title: 部署流程
-description: 从合并代码到线上可用的完整步骤。
+description: 知识库部署在 Cloudflare Pages，用 Cloudflare Access 限制只有团队邮箱能访问。
 ---
 
 <Callout>
-  上线前请确认 main 分支 CI 全部通过，并在群里同步一次变更内容。
+  上线前请确认 main 分支构建通过，并在群里同步一次变更内容。
 </Callout>
 
-## 准备工作
+## 架构
 
-- 已有仓库的推送权限
-- 本地能正常运行 `pnpm build`
+- **页面**：Next.js 静态导出（`output: 'export'`），产物在 `out/`
+- **搜索**：构建时生成索引，在浏览器里搜索
+- **AI 问答**：`functions/api/chat.ts` 是一个 Pages Function，和页面同域名，地址是 `/api/chat`
+- **访问控制**：Cloudflare Access，只有白名单邮箱能打开整个站点（包括问答接口）
 
-## 构建与推送
+## 第一次部署
+
+<Steps>
+<Step>
+
+### 提交锁文件
+
+本地运行一次 `pnpm install`，把生成的 `pnpm-lock.yaml` 提交到仓库，Cloudflare 会据此使用 pnpm 安装依赖。
+
+</Step>
+<Step>
+
+### 创建 Pages 项目
+
+Cloudflare 后台 → **Workers & Pages** → 创建 → **Pages** → 连接 Git，选择 `cairn` 仓库。构建设置：
+
+| 设置项       | 值           |
+| ------------ | ------------ |
+| 构建命令     | `pnpm build` |
+| 构建输出目录 | `out`        |
+| 环境变量     | `NODE_VERSION` = `22` |
+
+</Step>
+<Step>
+
+### 配置 AI 问答
+
+项目 → **Settings** → **Variables and Secrets**，添加：
+
+| 变量           | 示例                          | 说明                     |
+| -------------- | ----------------------------- | ------------------------ |
+| `LLM_BASE_URL` | `https://api.deepseek.com/v1` | 任何兼容 OpenAI 接口的地址 |
+| `LLM_API_KEY`  | `sk-...`                      | 类型选 **Secret**        |
+| `LLM_MODEL`    | `deepseek-chat`               | 模型名                   |
+
+改完变量后重新部署一次才会生效。换模型或服务商时只改这三个变量，不用改代码。
+
+</Step>
+<Step>
+
+### 绑定自定义域名
+
+项目 → **Custom domains** 添加你们的域名，例如 `kb.example.com`。`*.pages.dev` 默认域名在国内访问不稳定，建议团队统一用自定义域名。
+
+</Step>
+<Step>
+
+### 用 Cloudflare Access 限制访问
+
+Cloudflare 后台 → **Zero Trust**（免费版支持 50 人以内）：
+
+1. **Settings → Authentication**：登录方式添加 **One-time PIN**（邮箱验证码，无需其他配置）
+2. **Access → Applications** → 添加 **Self-hosted** 应用，域名填：
+   - 你的自定义域名，例如 `kb.example.com`
+   - `cairn.pages.dev` 和 `*.cairn.pages.dev`（默认域名和每个预览部署也要保护，否则可以绕过）
+3. 添加 **Allow** 策略，规则选 **Emails**，填入团队成员的邮箱
+
+之后访问网站会先要求输入邮箱，收到 6 位验证码后才能进入。不在白名单里的邮箱收不到验证码。
+
+<Callout type="warn" title="收不到验证码？">先检查垃圾邮件和「推广」分类，Gmail 经常把它归到那里。</Callout>
+
+</Step>
+</Steps>
+
+## 日常发布
 
 ```bash
-pnpm build
 git push origin main
-# 推送后由 Vercel 自动构建并发布
+# 推送后 Cloudflare Pages 自动构建并发布，每个分支也会生成预览链接
 ```
 
-知识库是一个标准的 Next.js 项目，推荐部署在 Vercel：导入 GitHub 仓库，框架选 Next.js，其他保持默认即可。
+## 本地预览完整效果（含 AI 问答）
+
+`pnpm dev` 只跑页面，不跑 `/api/chat`。要连同问答接口一起调试：
+
+```bash
+cp .dev.vars.example .dev.vars   # 填入真实的 LLM 配置
+pnpm preview                     # = next build + wrangler pages dev
+```
 
 ## 回滚
 
-在 Vercel 面板的 **Deployments** 里找到上一次正常的部署，点 **Promote to Production**。
+Pages 项目 → **Deployments**，找到上一次正常的部署，选择回滚到该部署。
 
 <Callout type="warn" title="回滚之后">
   记得在 [事故复盘](/docs/decisions/postmortems) 里补一篇记录，写清楚原因和后续措施。
@@ -34,3 +106,9 @@ git push origin main
 
 **构建时报找不到 `.source`？**
 `.source` 目录在 `next dev` / `next build` 时自动生成，不需要提交到仓库。
+
+**AI 问答提示「未配置」？**
+三个 `LLM_` 变量没有填全，或者填完没有重新部署。
+
+**免费额度够吗？**
+Pages 免费版每月 500 次构建、流量不限；问答接口算在 Workers 免费额度里（每天 10 万次请求）。只有大模型调用按 token 收费。

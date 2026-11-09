@@ -1,5 +1,5 @@
-import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata } from 'next';
+import { Provider } from '@/components/provider';
 import { Inter, JetBrains_Mono, Noto_Sans_SC } from 'next/font/google';
 import { appDescription, appName } from '@/lib/shared';
 import './global.css';
@@ -46,9 +46,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
         />
       </head>
       <body className="flex min-h-screen flex-col bg-fd-background font-sans">
-        <RootProvider theme={{ forcedTheme: 'dark', defaultTheme: 'dark' }}>
-          {children}
-        </RootProvider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );

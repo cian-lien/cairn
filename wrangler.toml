@@ -1,0 +1,4 @@
+# Cloudflare Pages 配置（Git 集成部署和本地 wrangler pages dev 都会读取）
+name = "cairn"
+pages_build_output_dir = "out"
+compatibility_date = "2026-11-01"

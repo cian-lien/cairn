@@ -1,0 +1,33 @@
+---
+title: ADR-013 部署到 Cloudflare Pages
+description: 静态导出部署到 Cloudflare Pages，用 Cloudflare Access 按邮箱限制访问，AI 问答用 Pages Function。
+---
+
+**状态**：已采纳
+**参与**：[成员]
+
+## 背景
+
+知识库只给团队内部看，需要：免费或低成本、团队使用合规、只允许指定邮箱访问、保留 AI 问答。
+
+## 候选方案
+
+| 方案                              | 优点                                       | 缺点                                                     |
+| --------------------------------- | ------------------------------------------ | -------------------------------------------------------- |
+| Vercel                            | Next.js 功能完整，零配置                   | 免费版不允许商业用途；访问控制按 Vercel 账号，不能按邮箱 |
+| Netlify / GitHub Pages            | 免费                                       | 免费版没有按邮箱的访问控制                               |
+| **Cloudflare Pages + Access**     | 免费、可商用、流量不限；Access 按邮箱放行 | 需要静态导出，失去少数依赖服务器的功能                   |
+
+## 决定
+
+选用 Cloudflare Pages：
+
+- 页面静态导出，搜索改为浏览器端静态搜索
+- AI 问答由 Pages Function（`functions/api/chat.ts`）提供，模型地址、密钥、模型名用环境变量配置
+- Cloudflare Access + 邮箱验证码，只放行团队成员
+
+## 后果
+
+- 失去按请求头返回 Markdown 的能力（`llms.txt`、Copy Markdown 仍可用）
+- 文档很多时，静态搜索首次加载会变慢，届时再评估
+- 国内访问需要自定义域名；长期稳定访问可能需要备案和国内 CDN
